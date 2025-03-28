@@ -11,7 +11,7 @@ source:
 
 build:
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
 
 requirements:
@@ -32,11 +32,18 @@ test:
     - pip
 
 about:
-  home: https://github.com/open-telemetry/opentelemetry-python-contrib/util/opentelemetry-util-http
+  home: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/util/opentelemetry-util-http
   summary: Web util for OpenTelemetry
   license: Apache-2.0
   license_file: LICENSE
+  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/util/opentelemetry-util-http
+  doc_url: https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/util/opentelemetry-util-http/README.rst
 
 extra:
+  anaconda-services:
+    ref: https://anaconda.zendesk.com/agent/tickets/70829
+    reason: Dependency for chromadb
+  recipe-maintainers:
+    - ianaobi
   recipe-maintainers:
     - mariusvniekerk
