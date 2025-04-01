@@ -1,13 +1,13 @@
 {% set name = "opentelemetry-util-http" %}
-{% set version = "0.36b0" %}
+{% set version = "0.52b1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_util_http-{{ version }}.tar.gz
-  sha256: 804807d9f50f3e7e135356531e8662e37f8c4c3edd54fc5b1826cb62202098c9
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_util_http-{{ version }}.tar.gz
+  sha256: c03c8c23f1b75fadf548faece7ead3aecd50761c5593a2b2831b48730eee5b31
 
 build:
   noarch: python
@@ -16,11 +16,11 @@ build:
 
 requirements:
   host:
-    - python >=3.7
-    - pip
+    - python
     - hatchling
+    - pip
   run:
-    - python >=3.7
+    - python
 
 test:
   imports:
@@ -30,14 +30,13 @@ test:
     - pip check
   requires:
     - pip
+    - python
 
 about:
-  home: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/util/opentelemetry-util-http
+  home: https://github.com/open-telemetry/opentelemetry-python-contrib/util/opentelemetry-util-http
   summary: Web util for OpenTelemetry
   license: Apache-2.0
   license_file: LICENSE
-  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/util/opentelemetry-util-http
-  doc_url: https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/util/opentelemetry-util-http/README.rst
 
 extra:
   anaconda-services:
@@ -46,4 +45,5 @@ extra:
   recipe-maintainers:
     - ianaobi
   recipe-maintainers:
+    - rxm7706
     - mariusvniekerk
