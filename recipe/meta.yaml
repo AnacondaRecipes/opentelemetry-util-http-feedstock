@@ -1,13 +1,13 @@
 {% set name = "opentelemetry-util-http" %}
-{% set version = "0.53b0" %}
+{% set version = "0.41b0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_util_http-{{ version }}.tar.gz
-  sha256: 521111872be0cdfd4346e15e9d4822aeeb8501b094c721ef49c26277b286084e
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_util_http-{{ version }}.tar.gz
+  sha256: 16d5bd04a380dc1079e766562d1e1626cbb47720f197f67010c45f090fffdfb3
 
 build:
   noarch: python
@@ -16,11 +16,11 @@ build:
 
 requirements:
   host:
-    - python
-    - hatchling
+    - python >=3.7
     - pip
+    - hatchling
   run:
-    - python
+    - python >=3.7
 
 test:
   imports:
@@ -30,7 +30,6 @@ test:
     - pip check
   requires:
     - pip
-    - python
 
 about:
   home: https://github.com/open-telemetry/opentelemetry-python-contrib/util/opentelemetry-util-http
@@ -45,5 +44,4 @@ extra:
   recipe-maintainers:
     - ianaobi
   recipe-maintainers:
-    - rxm7706
     - mariusvniekerk
