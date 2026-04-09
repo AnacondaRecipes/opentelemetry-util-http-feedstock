@@ -2,3 +2,4 @@ anaconda_config_version: 1
 upstream_sources:
   - pypi:
       identifier: opentelemetry-util-http
+      use_pre_release: true
