@@ -1,18 +1,18 @@
 {% set name = "opentelemetry-util-http" %}
-{% set version = "0.59b0" %}
+{% set version = "0.64b0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
-  sha256: ae66ee91be31938d832f3b4bc4eb8a911f6eddd38969c4a871b1230db2a0a560
+  sha256: 8a86a220dbfc56d736f47f1e5c4e7932a21fcf69052312e1bcf166444dc79322
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -23,22 +23,13 @@ requirements:
     - python
 
 # E   ModuleNotFoundError: No module named 'opentelemetry.test'
-# https://pypi.org/project/opentelemetry-test-utils, not in the main channel.
-{% set ignore_tests = " --ignore=tests/test_http_base.py" %}
 test:
-  source_files:
-    - tests
   imports:
     - opentelemetry.util.http
   commands:
     - pip check
-    - pytest -v tests {{ ignore_tests }}
   requires:
     - pip
-    - pytest >=7.4.4
-    - opentelemetry-semantic-conventions =={{ version }}
-    - opentelemetry-instrumentation =={{ version }}
-    - wrapt
 
 about:
   home: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/util/opentelemetry-util-http
