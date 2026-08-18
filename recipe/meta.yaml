@@ -30,6 +30,7 @@ test:
     - pip check
   requires:
     - pip
+    - opentelemetry-semantic-conventions =={{ version }}
 
 about:
   home: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/util/opentelemetry-util-http
