@@ -1,5 +1,5 @@
 {% set name = "opentelemetry-util-http" %}
-{% set version = "0.64b0" %}
+{% set version = "0.66b1" %}
 
 package:
   name: {{ name }}
@@ -7,12 +7,18 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
-  sha256: 8a86a220dbfc56d736f47f1e5c4e7932a21fcf69052312e1bcf166444dc79322
+  sha256: 047dea1a628031f857a5a32261dc0e955bc162d39993ed1cffb8f2cff5ba8a62
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<310]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation  # [not win]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --no-compile  # [win]
+  # Skip compiling byte code to avoid extremely long paths in the conda package cache
+  # Due to the nested structure of this package and the long build string, environments
+  # can exceed the Windows path limit if installed into LOCALAPPDATA
+  skip_compile_pyc:  # [win]
+    - "*"            # [win]
 
 requirements:
   host:
@@ -22,14 +28,19 @@ requirements:
   run:
     - python
 
-# E   ModuleNotFoundError: No module named 'opentelemetry.test'
+# tests/test_http_base.py requires opentelemetry-test-utils, tests/test_try_set_ip.py
+# requires opentelemetry-instrumentation; neither is available in the main channel yet.
 test:
+  source_files:
+    - tests
   imports:
     - opentelemetry.util.http
   commands:
     - pip check
+    - pytest -vv tests --ignore=tests/test_http_base.py --ignore=tests/test_try_set_ip.py
   requires:
     - pip
+    - pytest
     - opentelemetry-semantic-conventions =={{ version }}
 
 about:
@@ -42,7 +53,7 @@ about:
     This library provides ASGI, WSGI middleware and other HTTP-related functionality that is common to instrumented
     web frameworks (such as Django, Starlette, FastAPI, etc.) to track requests timing through OpenTelemetry.
   doc_url: https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/util/opentelemetry-util-http/README.rst
-  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/util/opentelemetry-util-http
+  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/v0.66b1/util/opentelemetry-util-http
 
 extra:
   recipe-maintainers:
